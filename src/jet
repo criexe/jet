@@ -1,0 +1,88 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+
+    echo "Help"
+
+else
+
+	# git push
+    if [ $1 == "push" ]; then
+
+        git pull origin master
+        git add .
+        git commit -m "$2"
+        git push origin master
+
+
+    # git pull
+    elif [ $1 == "pull" ]; then
+
+        git pull origin master
+
+
+    # git update base/master
+    elif [ $1 == "update-base" ]; then
+    
+        git pull base master
+        git push origin master
+
+
+    # Generate SSH Key
+    elif [ $1 == "generate" AND $2 == "ssh-key" ]; then
+
+        ssh-keygen -t rsa
+        cat ~/.ssh/id_rsa.pub
+
+
+    # Get SSH Key
+    elif [ $1 == "get" AND $1 == "ssh-key" ]; then
+
+        cat ~/.ssh/id_rsa.pub
+
+
+    # Apache Server
+    elif [ $1 == "apache" ]; then
+
+
+    	# Create New Site
+    	if [ $2 == "create-site" ]; then
+    		
+    		touch /etc/apache2/sites-available/$1.conf
+
+			echo "<VirtualHost *:80>
+
+			    ServerName $3
+
+				ServerAdmin mustafa@aydemir.im
+				DocumentRoot $4
+
+			    <Directory \"$4\">
+			        Require all granted
+				AllowOverride All
+			    </Directory>
+
+				ErrorLog ${APACHE_LOG_DIR}/error.log
+				CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+			</VirtualHost>" > /etc/apache2/sites-available/$3.conf
+
+			mkdir $4
+			chmod -R 755 $4
+			touch $4/index.html
+			echo "Hello World !" > $4/index.html
+
+			a2ensite $3.conf
+			service apache2 restart
+
+
+		# Restart Server
+		elif [ $2 == "restart" ]; then
+
+			service apache2 restart
+
+    	fi
+
+    fi
+
+fi
