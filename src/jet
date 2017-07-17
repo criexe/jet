@@ -124,6 +124,7 @@ else
 
 
     	# Create New Site
+		# jet apache create-site [DOMAIN] [PATH]
     	if [ $2 == "create-site" ]; then
     		
     		touch /etc/apache2/sites-available/$1.conf
