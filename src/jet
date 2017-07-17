@@ -105,17 +105,19 @@ else
 
 
     # Generate SSH Key
-    elif [ $1 == "generate" AND $2 == "ssh-key" ]; then
+    elif [ $1 == "generate" ]; then
 
-        ssh-keygen -t rsa
-        cat ~/.ssh/id_rsa.pub
-
+		if [ $2 == 'ssh-key' ]; then
+			ssh-keygen -t rsa
+    	    cat ~/.ssh/id_rsa.pub
+		fi
 
     # Get SSH Key
-    elif [ $1 == "get" AND $2 == "ssh-key" ]; then
+    elif [ $1 == "get" ]; then
 
-        cat ~/.ssh/id_rsa.pub
-
+		if [ $2 == "ssh-key" ]; then
+			cat ~/.ssh/id_rsa.pub
+		fi
 
     # Apache Server
     elif [ $1 == "apache" ]; then
