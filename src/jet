@@ -39,55 +39,71 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
+for var in "$@"
+do
+    echo "$var"
+done
+
+inParams () {
+  local e
+  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+  return 1
+}
+
 if [ -z $1 ]; then
 
     echo "Help"
-
+	# Read in File
 else
 
 	# git push
     if [ $1 == "push" ]; then
+ 
+		if [ -n $2 ]; then
+			if [ $2 == "auto" ]; then
 
-    	if [ $2 == "auto" ]; then
+				while true; do
+					diff_files=$( git diff --name-only )
+					short_stat=$( git diff --shortstat )
 
-    		while true; do
-    			diff_files=$( git diff --name-only )
-    			short_stat=$( git diff --shortstat )
+					commit_message=$diff_files
 
-    			commit_message=$diff_files
+					if [ "$commit_message" != "" ]; then
+					
+						echo "Commit Message"
+						echo "$commit_message : $short_stat"
+						echo ""
 
-    			if [ "$commit_message" != "" ]; then
-    			
-    				echo "Commit Message"
-    				echo "$commit_message : $short_stat"
-    				echo ""
+						git pull origin master
+						git add .
+						git commit -m "$commit_message"
+						git push origin master
+					
+						if [ -f ./push.after.$HOOK_EXT ]; then
+							./push.after.$HOOK_EXT
+						fi
+					else
+						echo "No change !"
+					fi
 
-    				git pull origin master
-	    			git add .
-	    			git commit -m "$commit_message"
-	    			git push origin master
-	    		
-			        if [ -f ./push.after.$HOOK_EXT ]; then
-	        			./push.after.$HOOK_EXT
-	        		fi
-	        	else
-	        		echo "No change !"
-    			fi
+					sleep 1
+					clear
+				done
 
-        		sleep 1
-        		clear
-    		done
+			else
 
-    	else
-			git pull origin master
-	        git add .
-	        git commit -m "$2"
-	        git push origin master
+				git pull origin master
+				git add .
+				git commit -m "$2"
+				git push origin master
 
-	        if [ -f ./push.after.$HOOK_EXT ]; then
-    			./push.after.$HOOK_EXT
-    		fi
-    	fi
+				if [ -f ./push.after.$HOOK_EXT ]; then
+					./push.after.$HOOK_EXT
+				fi
+			fi
+		fi
+
+		
 
     # git pull
     elif [ $1 == "pull" ]; then
@@ -98,16 +114,18 @@ else
     # git update base/master
     elif [ $1 == "update" ]; then
 
-        if [ $2 == "base" ]; then
-			git pull base master
-        	git push origin master
-        fi
+		if [ -n $2 ]; then
+			 if [ -n $2 && $2 == "base" ]; then
+				git pull base master
+				git push origin master
+			fi		
+		fi # $2 is not null
 
 
     # Generate SSH Key
     elif [ $1 == "generate" ]; then
 
-		if [ $2 == 'ssh-key' ]; then
+		if [ -n $2 && $2 == 'ssh-key' ]; then
 			ssh-keygen -t rsa
     	    cat ~/.ssh/id_rsa.pub
 		fi
@@ -115,53 +133,54 @@ else
     # Get SSH Key
     elif [ $1 == "get" ]; then
 
-		if [ $2 == "ssh-key" ]; then
-			cat ~/.ssh/id_rsa.pub
-		fi
+		if [ -n $2 ]; then
+			if [ $2 == "ssh-key" ]; then
+				cat ~/.ssh/id_rsa.pub
+			fi
+		fi # $2 is not null
 
     # Apache Server
     elif [ $1 == "apache" ]; then
 
+    	if [ -n $2 ]; then
+			# Create New Site
+			# jet apache create-site [DOMAIN] [PATH]
+			if [ $2 == "create-site" ]; then
+				
+				touch /etc/apache2/sites-available/$1.conf
 
-    	# Create New Site
-		# jet apache create-site [DOMAIN] [PATH]
-    	if [ $2 == "create-site" ]; then
-    		
-    		touch /etc/apache2/sites-available/$1.conf
+				echo "<VirtualHost *:80>
 
-			echo "<VirtualHost *:80>
+					ServerName $3
 
-			    ServerName $3
+					ServerAdmin mustafa@aydemir.im
+					DocumentRoot $4
 
-				ServerAdmin mustafa@aydemir.im
-				DocumentRoot $4
+					<Directory \"$4\">
+						Require all granted
+					AllowOverride All
+					</Directory>
 
-			    <Directory \"$4\">
-			        Require all granted
-				AllowOverride All
-			    </Directory>
+					ErrorLog ${APACHE_LOG_DIR}/error.log
+					CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-				ErrorLog ${APACHE_LOG_DIR}/error.log
-				CustomLog ${APACHE_LOG_DIR}/access.log combined
+				</VirtualHost>" > /etc/apache2/sites-available/$3.conf
 
-			</VirtualHost>" > /etc/apache2/sites-available/$3.conf
+				mkdir $4
+				chmod -R 755 $4
+				touch $4/index.html
+				echo "Hello World !" > $4/index.html
 
-			mkdir $4
-			chmod -R 755 $4
-			touch $4/index.html
-			echo "Hello World !" > $4/index.html
-
-			a2ensite $3.conf
-			service apache2 restart
+				a2ensite $3.conf
+				service apache2 restart
 
 
-		# Restart Server
-		elif [ $2 == "restart" ]; then
+			# Restart Server
+			elif [ $2 == "restart" ]; then
+				service apache2 restart
+			fi
 
-			service apache2 restart
-
-    	fi
-
+		fi # $2 is not null
     fi
 
 fi
