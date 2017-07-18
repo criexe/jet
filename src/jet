@@ -61,7 +61,7 @@ else
 
 					if [ "$commit_message" != "" ]; then
 					
-						echo -e "${GREEN}Commit Message${ENDCOLOR}"
+						echo -e "${GREEN}Commit Message${GREEN}"
 						echo -e "${YELLOW}$commit_message :${ENDCOLOR} $short_stat"
 						echo ""
 
@@ -74,7 +74,7 @@ else
 							./push.after.$HOOK_EXT
 						fi
 					else
-						echo- e "No change ! \r"
+						echo -e "${RED}No change !${ENDCOLOR}"
 					fi
 
 					sleep 1
