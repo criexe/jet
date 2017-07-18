@@ -65,11 +65,15 @@ else
 						echo -e "${YELLOW}$commit_message :${ENDCOLOR} $short_stat"
 						echo ""
 
+						echo -e "${YELLOW}Pulling...${ENDCOLOR}"
 						git pull origin master
+						echo -e "${YELLOW}Committing...${ENDCOLOR}"
 						git add .
 						git commit -m "$commit_message"
+						echo -e "${YELLOW}Pushing...${ENDCOLOR}"
 						git push origin master
-					
+						echo -e "${GREEN}Success !${ENDCOLOR}"
+						
 						if [ -f ./push.after.$HOOK_EXT ]; then
 							./push.after.$HOOK_EXT
 						fi
@@ -83,10 +87,14 @@ else
 
 			else
 
+				echo -e "${YELLOW}Pulling...${ENDCOLOR}"
 				git pull origin master
+				echo -e "${YELLOW}Committing...${ENDCOLOR}"
 				git add .
 				git commit -m "$2"
+				echo -e "${YELLOW}Pushing...${ENDCOLOR}"
 				git push origin master
+				echo -e "${GREEN}Success !${ENDCOLOR}"
 
 				if [ -f ./push.after.$HOOK_EXT ]; then
 					./push.after.$HOOK_EXT
