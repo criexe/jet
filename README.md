@@ -14,3 +14,6 @@ sudo mkdir /tmp/criexe && sudo mkdir /tmp/criexe/jet && sudo chmod -R 777 /tmp/c
 
 ### Fast Commit & Push
 ```jet push "COMMIT MESSAGE"```
+
+### Fast Commit & Push
+```jet push "COMMIT MESSAGE"```
