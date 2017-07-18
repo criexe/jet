@@ -1,2 +1,3 @@
-# jet
-JET
+# JET
+
+## Install
