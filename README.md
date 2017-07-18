@@ -10,6 +10,9 @@ sudo mkdir /tmp/criexe && sudo mkdir /tmp/criexe/jet && sudo chmod -R 777 /tmp/c
 ### Update JET
 ```jet update```
 
+### Help
+```jet```
+
 ## Git
 
 ### Auto Push
