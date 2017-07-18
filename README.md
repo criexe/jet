@@ -23,3 +23,12 @@ sudo mkdir /tmp/criexe && sudo mkdir /tmp/criexe/jet && sudo chmod -R 777 /tmp/c
 
 ### Update base/master
 ```jet update base```
+
+
+## Apache
+
+### Apache Restart
+```jet apache restart```
+
+### Create New Site
+```jet apache create-site [DOMAIN] [PATH]```
