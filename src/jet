@@ -39,17 +39,6 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-for var in "$@"
-do
-    echo "$var"
-done
-
-inParams () {
-  local e
-  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
-  return 1
-}
-
 if [ -z $1 ]; then
 
     echo "Help"
