@@ -2,7 +2,7 @@
 
 # Author        : Mustafa Aydemir (mustafa@aydemir.im)
 # Latest Update : July 18, 2017
-# Version       : v0.10
+# Version       : v0.20
 
 HOOK_EXT="jhook"
 
@@ -56,7 +56,8 @@ else
 	# git push
     if [ $1 == "push" ]; then
  
-		if [ -n $2 ]; then
+		if [ $# -eq 2 ]; then
+
 			if [ $2 == "auto" ]; then
 
 				while true; do
@@ -93,6 +94,7 @@ else
 
 			else
 
+				# TODO : Check Permission
 				echo -e "${YELLOW}Pulling...${ENDCOLOR}"
 				git pull origin master
 				echo -e "${YELLOW}Committing...${ENDCOLOR}"
@@ -142,7 +144,7 @@ else
     # Generate SSH Key
     elif [ $1 == "generate" ]; then
 
-		if [ -n $2 && $2 == 'ssh-key' ]; then
+		if [ $2 == 'ssh-key' ]; then
 			ssh-keygen -t rsa
     	    cat ~/.ssh/id_rsa.pub
 		fi
@@ -150,7 +152,7 @@ else
     # Get SSH Key
     elif [ $1 == "get" ]; then
 
-		if [ -n $2 ]; then
+		if [ $# -eq 2 ]; then
 			if [ $2 == "ssh-key" ]; then
 				cat ~/.ssh/id_rsa.pub
 			fi
@@ -159,7 +161,7 @@ else
     # Apache Server
     elif [ $1 == "apache" ]; then
 
-    	if [ -n $2 ]; then
+    	if [ $# -eq 2]; then
 			# Create New Site
 			# jet apache create-site [DOMAIN] [PATH]
 			if [ $2 == "create-site" ]; then
