@@ -17,6 +17,8 @@ sudo mkdir /tmp/criexe && sudo mkdir /tmp/criexe/jet && sudo chmod -R 777 /tmp/c
 
 ### Auto Push
 ```jet push auto```
+To wait for commit message : 
+```jet push hold```
 
 ### Fast Commit & Push
 ```jet push "COMMIT MESSAGE"```
