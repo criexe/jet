@@ -92,6 +92,49 @@ else
 					clear
 				done
 
+			elif [ $2 == "hold" ]; then
+
+				while true; do
+
+					printf "${GREEN}Commit Message (${ENDCOLOR}${YELLOW}Enter for auto message${ENDCOLOR}${GREEN}) : ${ENDCOLOR}"
+					read message
+
+					if [ "$message" == "" ]; then
+						diff_files=$( git diff --name-only )
+						short_stat=$( git diff --shortstat )
+
+						commit_message=$diff_files
+					else
+						commit_message=$message
+					fi
+
+					if [ "$commit_message" != "" ]; then
+					
+						echo -e "${GREEN}Commit Message${GREEN}"
+						echo -e "${YELLOW}$commit_message :${ENDCOLOR} $short_stat"
+						echo ""
+
+						echo -e "${YELLOW}Pulling...${ENDCOLOR}"
+						git pull origin master
+						echo -e "${YELLOW}Committing...${ENDCOLOR}"
+						git add .
+						git commit -m "$commit_message"
+						echo -e "${YELLOW}Pushing...${ENDCOLOR}"
+						git push origin master
+						echo -e "${GREEN}Success !${ENDCOLOR}"
+						
+						if [ -f ./push.after.$HOOK_EXT ]; then
+							./push.after.$HOOK_EXT
+						fi
+					else
+						echo -e "${RED}No change !${ENDCOLOR}"
+					fi
+
+					sleep 1
+					clear
+				done
+
+
 			else
 
 				# TODO : Check Permission
