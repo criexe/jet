@@ -209,6 +209,9 @@ elif OP == "auto":
             else:
                 sleep = 1
 
+            print(PARAMS)
+            quit()
+
             # Hold or Auto
             if "hold" in PARAMS:
                 # Input Commit Message
