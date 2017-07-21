@@ -210,7 +210,7 @@ elif OP == "auto":
                 sleep = 1
 
             # Hold or Auto
-            if "hold" in PARAMS:
+            if "hold" in PARAMS: 
                 clear()
                 # Input Commit Message
                 commit_msg = input(color_green("Commit Message : "))
@@ -232,7 +232,7 @@ elif OP == "auto":
 
                 clear()
                 print(color_yellow("Adding Files..."))
-                os.system("git add .")
+                os.system("git add --all")
 
                 clear()
                 print(color_yellow("Committing..."))
