@@ -184,6 +184,17 @@ else
 		fi 
 
 
+	# git update base/master
+    elif [ $1 == "loop" ]; then
+
+		if [ $# -eq 3 ]; then
+			while true; do
+				$3
+				sleep $2
+			done		
+		fi 
+
+
     # Generate SSH Key
     elif [ $1 == "generate" ]; then
 
