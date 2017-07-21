@@ -212,7 +212,7 @@ elif OP == "auto":
             # Hold or Auto
             if "hold" in PARAMS:
                 # Input Commit Message
-                commit_msg = input(color_green("Commit Message :"))
+                commit_msg = input(color_green("Commit Message : "))
             else:
                 # Diff Files
                 diff_files = output(["git", "diff", "--name-only"])
