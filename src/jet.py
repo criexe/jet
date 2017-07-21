@@ -212,6 +212,7 @@ elif OP == "auto":
             # Hold or Auto
             if "hold" in PARAMS:
                 # Input Commit Message
+                clear()
                 commit_msg = input(color_green("Commit Message : "))
             else:
                 # Diff Files
