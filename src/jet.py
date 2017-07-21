@@ -243,7 +243,7 @@ elif OP == "auto":
                 os.system("git push " + branch)
 
                 clear()
-                print(color_green("Done !"))
+                print(color_green("Done : ") + color_yellow(commit_msg) )
                 time.sleep(sleep)            
 
 
