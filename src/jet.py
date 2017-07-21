@@ -197,9 +197,6 @@ elif OP == "auto":
 
         while True:
 
-            clear()
-            print(color_yellow("Waiting..."))
-
             # Branch - Defaul : "origin master"
             if "branch" in PARAMS:
                 branch = PARAMS["branch"]
