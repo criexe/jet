@@ -209,10 +209,14 @@ elif OP == "auto":
             else:
                 sleep = 1
 
-            # Diff Files
-            diff_files = output(["git", "diff", "--name-only"])
-            # Commit Message (Auto Generated)
-            commit_msg = str(diff_files.decode().strip().replace("\n", ", "))
+            # Hold
+            if "hold" in PARAMS:
+                commit_msg = input(color_green("Commit Message :"))
+            else:
+                # Diff Files
+                diff_files = output(["git", "diff", "--name-only"])
+                # Commit Message (Auto Generated)
+                commit_msg = str(diff_files.decode().strip().replace("\n", ", "))
 
             if commit_msg != "":
                 # Preview Commit Message
