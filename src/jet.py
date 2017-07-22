@@ -270,6 +270,15 @@ elif OP == "loop":
 elif OP == "update":
     pass
 elif OP == "generate":
-    pass
+    
+    if argv[0] == "ssh-key":
+        os.system("ssh-keygen -t rsa")
+        os.system("cat ~/.ssh/id_rsa.pub")
+
 elif OP == "get":
-    pass
+    
+    if argv[0] == "ssh-key":
+        clear()
+        pprint(COLOR_GREEN)
+        os.system("cat ~/.ssh/id_rsa.pub")
+        pprint(COLOR_END)
