@@ -303,6 +303,7 @@ elif OP == "update":
                     os.rename(TMP_PATH + "/jet", "/usr/local/bin/jet")
                     os.system("chmod 755 /usr/local/bin/jet")
                     os.system("jet")
+                    
 
             else:
                 raise Exception("No downloadable files found")
