@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
 # cx.py [OPERATION] --param=value --param=value ...
 
@@ -197,8 +197,6 @@ def command_loop(cmd, sleep=None):
         time.sleep(sleep)
 
 # =================================================
-
-os.chdir("..")
 
 if OP == False:
 
