@@ -5,9 +5,23 @@
 import sys
 import os
 import time
+import platform
+
+_version = "v0.12"
+_authors = "Mustafa Aydemir"
 
 OP     = False
 PARAMS = {}
+
+OS = platform.system().lower()
+
+CX_USR_SHARE_PATH = "/usr/local/share/criexe"
+USR_SHARE_PATH    = "/usr/local/share/criexe/jet"
+
+CX_TMP_PATH = "/tmp/criexe"
+TMP_PATH    = "/tmp/criexe/jet"
+
+JET_UPDATE_URL = "http://criexe.com/jet/source/release/source.txt"
 
 COLOR_RED          = '\033[91m'
 COLOR_GREEN        = '\033[92m'
@@ -88,7 +102,6 @@ class net:
     follow_location = True
     charset         = "iso-8859-1"
     
-    
     def connect(self, address):
         
         if address == None:
@@ -127,7 +140,10 @@ class file:
     def append(self, file, string):
         with open(file, "a") as f:
             f.write(str(string))
-            
+
+    def write(self, file, data, mode = "w"):
+        with open(file, mode) as f:
+            f.write(str(data))
 
 # TODO
 class email:
@@ -268,7 +284,32 @@ elif OP == "loop":
         print(color_red(str(e)))
 
 elif OP == "update":
-    pass
+    
+    if False:
+        pass
+    else:
+
+        clear()
+        print(color_yellow("Updating JET..."))
+        print(color_yellow("Downloading Source Codes..."))
+        connect_update = net().connect(JET_UPDATE_URL)
+        try:
+            if connect_update["code"] == 200:
+                if OS == "darwin" or OS == "linux":
+                    data = connect_update["data"]
+                    print(color_green("Downloaded !"))
+                    os.makedirs(TMP_PATH, exist_ok = True)
+                    file().write(TMP_PATH + "/jet", data)
+                    os.rename(TMP_PATH + "/jet", "/usr/local/bin/jet")
+                    os.system("chmod 755 /usr/local/bin/jet")
+                    os.system("jet")
+
+            else:
+                raise Exception("No downloadable files found")
+        except Exception as e:
+                print(color_red("Update Error : ") + str(e))
+            
+
 elif OP == "generate":
     
     if argv[0] == "ssh-key":
