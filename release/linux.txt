@@ -1,5 +1,4 @@
 #!/usr/local/bin/python3
-#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
 # cx.py [OPERATION] --param=value --param=value ...
 
@@ -329,6 +328,6 @@ elif OP == "zip" and argv[0] != None and argv[1] != None:
 
     if OS == "darwin" or OS == "linux":
         print(color_yellow("Zipping..."))
-        os.system("zip -r " + argv[0] + " " + argv[1])
+        os.system("zip " + argv[0] + " " + argv[1])
     elif OS == "windows":
         print(color_red("Windows is not ready !"))
