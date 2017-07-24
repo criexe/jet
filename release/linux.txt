@@ -290,7 +290,7 @@ elif OP == "update":
         clear()
         print(color_yellow("Updating JET..."))
         print(color_yellow("Downloading Source Codes..."))
-        connect_update = net().connect(JET_UPDATE + OS)
+        connect_update = net().connect(JET_UPDATE_URL + OS)
         try:
             if connect_update["code"] == 200:
                 if OS == "darwin" or OS == "linux":
@@ -328,6 +328,6 @@ elif OP == "zip" and argv[0] != None and argv[1] != None:
 
     if OS == "darwin" or OS == "linux":
         print(color_yellow("Zipping..."))
-        os.system("zip " + argv[0] + " " + argv[1])
+        os.system("zip -r " + argv[0] + " " + argv[1])
     elif OS == "windows":
         print(color_red("Windows is not ready !"))

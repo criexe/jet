@@ -291,7 +291,7 @@ elif OP == "update":
         clear()
         print(color_yellow("Updating JET..."))
         print(color_yellow("Downloading Source Codes..."))
-        connect_update = net().connect(JET_UPDATE + OS)
+        connect_update = net().connect(JET_UPDATE_URL + OS)
         try:
             if connect_update["code"] == 200:
                 if OS == "darwin" or OS == "linux":
