@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python3
 #!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
 # cx.py [OPERATION] --param=value --param=value ...
@@ -58,7 +58,10 @@ def output(cmd_arr):
 
 # Clear Console
 def clear():
-    os.system("clear")
+    if OS == "windows":
+        os.system("cls")
+    else:
+        os.system("clear")
 
 
 # Overwrite the Previous Print
@@ -197,10 +200,25 @@ def command_loop(cmd, sleep=None):
         os.system(cmd)
         time.sleep(sleep)
 
+
+def install_jet():
+
+    import importlib
+    if importlib.find_loader('pycurl') ==  None:
+        print(color_red("Not Found : ") + "pycurl")
+        print(color_yellow("Installing : ") + "pycurl")
+        os.system("pip3 install pycurl")
+
+
+install_jet()
 # =================================================
 
 if OP == False:
 
+    # Install
+    install_jet()
+
+    # Print Help Message
     clear()
     print(color_green("JET"))
     print(color_yellow("HELP MESSAGE"))
@@ -212,7 +230,7 @@ elif OP == "auto":
 
         while True:
 
-            # Branch - Defaul : "origin master"
+            # Branch - Default : "origin master"
             if "branch" in PARAMS:
                 branch = PARAMS["branch"]
             else:
